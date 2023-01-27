@@ -31,6 +31,8 @@ const Coffee = sequelize.define(
 Coffee.prototype.toJSON = function () {
   const values = Object.assign({}, this.get());
 
+  let image = values.image ? values.image : "no-image.jpeg";
+  values.image = `http://localhost:3000/storage/images/${image}`;
   return values;
 };
 

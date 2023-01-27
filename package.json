@@ -16,9 +16,11 @@
     "express": "^4.18.2",
     "express-fileupload": "^1.4.0",
     "express-routes-mapper": "^1.1.0",
+    "express-validator": "^6.14.3",
     "jsonwebtoken": "^9.0.0",
     "mysql2": "^3.0.1",
-    "sequelize": "^6.28.0"
+    "sequelize": "^6.28.0",
+    "socket.io": "^4.5.4"
   },
   "devDependencies": {
     "eslint": "^8.32.0",

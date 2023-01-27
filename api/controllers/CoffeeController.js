@@ -20,7 +20,7 @@ const CoffeeController = () => {
       });
     } catch (err) {
       console.log(err);
-      return res.status(500).json({ msg: "Internal server error" });
+      return res.status(500).json({ messages: "Internal server error" });
     }
   };
 
@@ -38,13 +38,20 @@ const CoffeeController = () => {
       });
     } catch (err) {
       console.log(err);
-      return res.status(500).json({ msg: "Internal server error" });
+      return res.status(500).json({ messages: "Internal server error" });
     }
   };
 
   const store = async (req, res) => {
     try {
       const { name, description, image, price } = req.body;
+
+      if (!name || !description || !price) {
+        return res.status(400).json({
+          messages: "Please fill all required fields",
+        });
+      }
+
       const data = await Coffee.create({
         name,
         description,
@@ -53,12 +60,12 @@ const CoffeeController = () => {
       });
 
       return res.status(200).json({
-        messages: "success",
+        messages: "Successfuly Created Data",
         data,
       });
     } catch (err) {
       console.log(err);
-      return res.status(500).json({ msg: "Internal server error" });
+      return res.status(500).json({ messages: "Internal server error" });
     }
   };
 
@@ -66,27 +73,36 @@ const CoffeeController = () => {
     try {
       const { id } = req.params;
       const { name, description, image, price } = req.body;
-      const data = await Coffee.update(
-        {
-          name,
-          description,
-          image,
-          price,
+
+      // validate body
+      if (!name || !description || !price) {
+        return res.status(400).json({
+          messages: "Please fill all required fields",
+        });
+      }
+
+      let form = {
+        name,
+        description,
+        price,
+      };
+
+      if (image != null) {
+        form.image = image;
+      }
+      const data = await Coffee.update(form, {
+        where: {
+          id,
         },
-        {
-          where: {
-            id,
-          },
-        }
-      );
+      });
 
       return res.status(200).json({
-        messages: "success",
+        messages: "Successfuly Updated Data",
         data,
       });
     } catch (err) {
       console.log(err);
-      return res.status(500).json({ msg: "Internal server error" });
+      return res.status(500).json({ messages: "Internal server error" });
     }
   };
 
@@ -100,12 +116,12 @@ const CoffeeController = () => {
       });
 
       return res.status(200).json({
-        messages: "success",
+        messages: "Successfuly Deleted Data",
         data,
       });
     } catch (err) {
       console.log(err);
-      return res.status(500).json({ msg: "Internal server error" });
+      return res.status(500).json({ messages: "Internal server error" });
     }
   };
 

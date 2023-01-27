@@ -18,10 +18,10 @@ const UserController = () => {
       return res.status(200).json({ access_token, user });
     } catch (err) {
       console.log(err);
-      return res.status(500).json({ msg: "Internal server error" });
+      return res.status(500).json({ messages: "Internal server error" });
     }
 
-    // return res.status(400).json({ msg: "Bad Request: Passwords don't match" });
+    // return res.status(400).json({ messages: "Bad Request: Passwords don't match" });
   };
 
   const login = async (req, res) => {
@@ -36,7 +36,9 @@ const UserController = () => {
         });
 
         if (!user) {
-          return res.status(400).json({ msg: "Bad Request: User not found" });
+          return res
+            .status(400)
+            .json({ messages: "Bad Request: User not found" });
         }
 
         if (bcryptService().comparePassword(password, user.password)) {
@@ -45,16 +47,16 @@ const UserController = () => {
           return res.status(200).json({ access_token, user });
         }
 
-        return res.status(401).json({ msg: "Unauthorized" });
+        return res.status(401).json({ messages: "Unauthorized" });
       } catch (err) {
         console.log(err);
-        return res.status(500).json({ msg: "Internal server error" });
+        return res.status(500).json({ messages: "Internal server error" });
       }
     }
 
     return res
       .status(400)
-      .json({ msg: "Bad Request: Email or password is wrong" });
+      .json({ messages: "Bad Request: Email or password is wrong" });
   };
 
   const validate = (req, res) => {
@@ -76,7 +78,7 @@ const UserController = () => {
       return res.status(200).json({ data });
     } catch (err) {
       console.log(err);
-      return res.status(500).json({ msg: "Internal server error" });
+      return res.status(500).json({ messages: "Internal server error" });
     }
   };
 
